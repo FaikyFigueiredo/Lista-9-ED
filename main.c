@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "listade.h"
-
 void menu(){
   printf("\n1 - Adicionar Produto\n");
   printf("2 - Remover Produto\n");
