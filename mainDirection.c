@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "listaDirection.h"
-
 void menu(){
     printf("1-Adicionar um trecho\n");
     printf("2-Remover um trecho\n");
