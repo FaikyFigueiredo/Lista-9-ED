@@ -11,10 +11,10 @@ typedef struct lista {
   int tamanho;
 } ListaDE;
 
-void criar(ListaDE *l);
+void criar(ListaDE **l);
 int vazia(ListaDE *l);
 int tamanho(ListaDE *l);
-int inserir(ListaDE *l, char direction);
-void exibir(ListaDE *l, int x, int y);
-int searchDirection(ListaDE *l, char direction);
-int remove(ListaDE *l,int pos);
+int inserir(ListaDE *l, char direction, float distance, int index);
+void exibir(ListaDE *l, float x, float y);
+float searchDirection(ListaDE *l, char direction);
+int remover(ListaDE *l,char direction);

@@ -1,16 +1,21 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "listaDirection.h"
 
-void criar(ListaDE* l){
-    l = (ListaDE*)malloc(sizeof(ListaDE));
+void criar(ListaDE** l){
+    (*l) = (ListaDE*)malloc(sizeof(ListaDE));
+    (*l)->inicio = NULL;
+    (*l)->fim = NULL;
+    (*l)->tamanho = 0;
 }
 int vazia(ListaDE* l){
-    l==NULL? return 1: return 0;
+    if (l==NULL){return 1;}
+    return 0;
 }
 int tamanho(ListaDE* l){
     int i;
     No* temp = l->inicio;
-    for(i = 0 ; temp != NULL ; temp = temp->prox);
+    for(i = 0 ; temp != NULL ; temp = temp->prox){i++;}
     return i;
 }
 int inserir(ListaDE* l, char direction, float distance, int index){
@@ -21,7 +26,15 @@ int inserir(ListaDE* l, char direction, float distance, int index){
     new->direction = direction;
     new->idTrecho = index;
     new->distance = distance;
-    new->ant = l->fim;
+    if(l->inicio == NULL){
+        l->inicio = new;
+        l->fim = new;
+        new->prox = NULL;
+        new->ant = NULL;
+    }else{
+        l->fim->prox = new;
+        new->ant = l->fim;
+    }
     l->fim = new;
     new->prox = NULL;
     l->tamanho++;
@@ -43,17 +56,17 @@ float distanceY(float distance, char direction){
 }
 void exibir(ListaDE* l, float x, float y){
     No* temp = l->inicio;
-    printf("Posicao inicial: X-%.2f Y-%.2f", x,y);
+    printf("Posicao inicial: X:%.2f Y:%.2f\n", x,y);
     for( ; temp!=NULL ; temp = temp->prox){
-        x+=directionX(temp->distance,temp->direction)
-        y+=directionY(temp->distance,temp->direction);
-        printf("Posicao atual no trecho%d: X-%.2f Y-%.2f",temp->idTrecho,x,y);
+        x+=distanceX(temp->distance,temp->direction);
+        y+=distanceY(temp->distance,temp->direction);
+        printf("Posicao atual no trecho %.4d: X:%.2f Y:%.2f\n",temp->idTrecho,x,y);
     }
-    printf("Voce andou para esquerda por %.2f metros",searchDirection(l,'a'));
-    printf("Voce andou para direita por %.2f metros",searchDirection(l,'d'));
-    printf("Voce andou para frente por %.2f metros",searchDirection(l,'w'));
-    printf("Voce andou para tras por %.2f metros",searchDirection(l,'s'));
-    printf("Sua posicao final foi X-%.2f Y-%.2f",x,y);
+    printf("Voce andou para esquerda por %.2f metros\n",searchDirection(l,'a'));
+    printf("Voce andou para direita por %.2f metros\n",searchDirection(l,'d'));
+    printf("Voce andou para frente por %.2f metros\n",searchDirection(l,'w'));
+    printf("Voce andou para tras por %.2f metros\n",searchDirection(l,'s'));
+    printf("Sua posicao final foi X:%.2f Y:%.2f\n",x,y);
 }
 float searchDirection(ListaDE* l, char direction){
     No* temp = l->inicio;
@@ -64,7 +77,7 @@ float searchDirection(ListaDE* l, char direction){
     }
     return len;
 }
-int remove(ListaDE* l, char direction){
+int remover(ListaDE* l, char direction){
     No* temp = l->fim;
     for(;temp->direction!=direction && temp!=NULL;temp=temp->ant);
     if (temp == NULL)
