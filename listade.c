@@ -7,7 +7,6 @@ void criar(ListaDE *l) {
   l->inicio = l->fim = NULL;
   l->tamanho = 0;
 }
-
 int vazia(ListaDE *l) {
   if (l->inicio == NULL)
     return 1;
