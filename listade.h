@@ -14,7 +14,6 @@ typedef struct lista {
   No *fim;
   int tamanho;
 } ListaDE;
-
 void criar(ListaDE *l);
 int vazia(ListaDE *l);
 int tamanho(ListaDE *l);
